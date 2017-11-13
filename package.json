@@ -1,0 +1,20 @@
+{
+  "name": "diawi",
+  "version": "0.1.0",
+  "description": "Upload an .ipa to Diawi",
+  "main": "diawi.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ipa",
+    "diawi"
+  ],
+  "author": "Sam Dean",
+  "license": "ISC",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "path": "^0.12.7",
+    "request": "^2.83.0"
+  }
+}
