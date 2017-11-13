@@ -2,7 +2,9 @@
   "name": "diawi",
   "version": "0.1.0",
   "description": "Upload an .ipa to Diawi",
+  "homepage": "https://github.com/deanWombourne/node-diawi",
   "main": "diawi.js",
+  "bin": { "diawi": "./bin/main.js" },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,5 +18,9 @@
     "fs": "0.0.1-security",
     "path": "^0.12.7",
     "request": "^2.83.0"
+  },
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/deanWombourne/node-diawi.git"
   }
 }
