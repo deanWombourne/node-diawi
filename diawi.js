@@ -25,7 +25,6 @@ var Diawi = function(opts) {
 
   this.token = opts.token.trim();
   this.path = opts.path.trim();
-  var password = opts.password;
 
   //console.log("Starting upload of '" + this.path + "' with token '" + this.token.substring(0, 3) + "...'");
 
