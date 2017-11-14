@@ -2,24 +2,46 @@
 
 var Diawi = require("../diawi.js");
 
+var argv = require('yargs')
+  .command(['upload <token> <ipa>', '$0'], 'Uploads an ipa to Diawi', (yargs) => {
+      yargs.positional('token', {
+        describe: 'The api token for Diawi',
+        type: 'string'
+      })
+      .positional('ipa', {
+        describe: 'The path to the ipa, apk, or zip to upload',
+        type: 'string'
+      })
+      .option('password', {
+        alias: 'p',
+        describe: 'protect your app with a password: it will be required to access the installation page',
+        type: 'string'
+      })
+  })
+  .demandCommand()
+  .help()
+  .argv;
 
-function printUsage() {
-  console.log("Usage: node", path.basename(process.argv[1]), "<api token>", "<path/to/app.ipa>");
-}
+//console.log(argv);
 
 
-if (process.argv.length < 4) {
-  printUsage();
-} else {
-  var token = process.argv[2]
-  var ipaPath = process.argv[3]
+var command = argv._[0] || "upload";
 
-  var diawi = new Diawi({ token: token, path: ipaPath })
-    .on("complete", function(url) {
-      console.log(url);
-    })
-    .on("error", function(error) {
-      console.log("Failed: ", error);
-      process.exit(1);
-    });
+switch (command) {
+
+  case 'upload':
+    new Diawi({ token: argv.token, path: argv.ipa, password: argv.password })
+      .on("complete", function(url) {
+        console.log(url);
+      })
+      .on("error", function(error) {
+        console.log("Failed: ", error);
+        process.exit(1);
+      });
+
+      break
+
+  default:
+    console.log("Unknown command: ", command)
+    break
 }

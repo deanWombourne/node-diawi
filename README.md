@@ -14,11 +14,22 @@ new Diawi({ token: "api token", path: "path/to/app.ipa" })
 ```
 
 Command line:
+
+
+The simplest way is just to pass your token and the path to the ipa/apk/zip
 ```
 > diawi <token> <path/to/app.ipa>
 path/to/uploaded.ipa
 ```
+(which is shorthand for `diawi upload <token> <path>`)
 
+You can get some help like:
+```
+> diawi --help
+```
+
+The output of that should tell you how to pass optional arguments (i.e. `-p passw0rd` will password protect the uploaded app). The end goal (still a way off)
+is to support the full list of optinal parameters. See `--help` to see what's currently supported.
 
 Description
 --

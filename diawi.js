@@ -10,6 +10,7 @@ var STATUS_URL = "https://upload.diawi.com/status";
 var POLL_MAX_COUNT = 10;
 var POLL_INTERVAL = 2;
 
+
 const sleep = (seconds) => {
     return new Promise((resolve, reject) => {
         setTimeout(resolve, (seconds * 1000));
@@ -24,13 +25,24 @@ var Diawi = function(opts) {
 
   this.token = opts.token.trim();
   this.path = opts.path.trim();
+  var password = opts.password;
 
   //console.log("Starting upload of '" + this.path + "' with token '" + this.token.substring(0, 3) + "...'");
 
+  // Create the required form fields
   var formData = {
     token: this.token,
     file: fs.createReadStream(this.path)
   };
+
+  // Append the optional parameters to the formData
+  [ "password" ].forEach((key) => {
+    if (opts[key]) {
+      formData[key] = opts[key];
+    }
+  });
+
+  //console.log(formData);
 
   request.post({ url: UPLOAD_URL, formData: formData }, this.onUploadComplete.bind(this));
 }
