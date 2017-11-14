@@ -20,6 +20,6 @@ if (process.argv.length < 4) {
     })
     .on("error", function(error) {
       console.log("Failed: ", error);
-      throw error;
+      process.exit(1);
     });
 }
