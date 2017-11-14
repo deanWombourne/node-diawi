@@ -1,6 +1,6 @@
 {
   "name": "diawi",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Upload an .ipa to Diawi",
   "homepage": "https://github.com/deanWombourne/node-diawi",
   "main": "diawi.js",
