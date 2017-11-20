@@ -29,7 +29,7 @@ You can get some help like:
 ```
 
 The output of that should tell you how to pass optional arguments (i.e. `-p passw0rd` will password protect the uploaded app). The end goal (still a way off)
-is to support the full list of optinal parameters. See `--help` to see what's currently supported.
+is to support the full list of optional parameters. See `--help` to see what's currently supported.
 
 Description
 --
