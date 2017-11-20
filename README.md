@@ -45,38 +45,9 @@ profile tab.
 Bitrise
 ---
 
-To integrate this into Bitrise needs two steps, one to install the npm module,
-and another to upload the ipa.
+To integrate with bitrise there is a bitrise-upload step in the bitrise StepLib.
 
-The first step is just the default npm step, specifying to install globally the
-diawi module.
-
-The second step is a script which takes in two parameters
-  - `DIAWI_TOKEN` is an env variable configured for this workflow.
-  - `BITRISE_IPA_PATH` is the env variable created from a previous archive step
-
-The script pipes the output of diawi (which is a url) into the env variable
-`DIAWI_IPA_URL`, which we then use in a Slack message.
-
-```
-- npm@0.9.0:
-    inputs:
-    - command: install diawi -g
-    title: Install diawi npm module
-- script@1.1.5:
-    title: Upload to Diawi
-    inputs:
-    - content: |-
-        #!/usr/bin/env bash
-        # fail if any commands fails
-        set -e
-        # debug log
-        set -x
-
-        diawi ${DIAWI_TOKEN} ${BITRISE_IPA_PATH} | envman add --key DIAWI_IPA_URL
-```
-
-FYI: Here's the Slack notification step using the `DIAWI_IPA_URL` from earlier.
+I then follow it with a Slack notification step using the `DIAWI_IPA_URL` from earlier.
 ```
 - slack@2.6.3:
     inputs:
