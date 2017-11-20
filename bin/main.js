@@ -17,6 +17,11 @@ var argv = require('yargs')
         describe: 'protect your app with a password: it will be required to access the installation page',
         type: 'string'
       })
+      .option('comment', {
+        alias: 'c',
+        describe: 'additional information to your users on this build: the comment will be displayed on the installation page',
+        type: 'string'
+      })
   })
   .demandCommand()
   .help()
@@ -30,7 +35,7 @@ var command = argv._[0] || "upload";
 switch (command) {
 
   case 'upload':
-    new Diawi({ token: argv.token, path: argv.ipa, password: argv.password })
+    new Diawi({ token: argv.token, path: argv.ipa, password: argv.password, comment: argv.comment })
       .on("complete", function(url) {
         console.log(url);
       })
