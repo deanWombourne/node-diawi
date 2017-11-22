@@ -1,6 +1,6 @@
 {
   "name": "diawi",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Upload an ipa, apk or zip to Diawi",
   "homepage": "https://github.com/deanWombourne/node-diawi",
   "main": "diawi.js",
