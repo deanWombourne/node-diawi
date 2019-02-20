@@ -9,7 +9,7 @@ Script:
 var Diawi = require("diawi");
 
 new Diawi({ token: "api token", path: "path/to/app.ipa" })
-  .on("success", function(url) { ... })
+  .on("complete", function(url) { ... })
   .on("error", function(error) { ... })
 ```
 
