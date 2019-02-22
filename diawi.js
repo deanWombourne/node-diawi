@@ -8,7 +8,7 @@ const UPLOAD_URL = 'https://upload.diawi.com/';
 const STATUS_URL = 'https://upload.diawi.com/status';
 const POLL_MAX_COUNT = 10;
 const POLL_INTERVAL = 2;
-
+const DEBUG = false;
 
 const sleep = (seconds) => {
   return new Promise((resolve, reject) => {
@@ -28,8 +28,11 @@ const Diawi = function(opts) {
     throw (new Error('Could not find file at ' + this.path));
   }
 
+  if (DEBUG) {
+    console.log('Starting upload of \'' +
+      this.path + '\' with token \'' + this.token.substring(0, 3) + '...\'');
+  }
 
-  console.log('Starting upload of \'' + this.path + '\' with token \'' + this.token.substring(0, 3) + '...\'');
 
   // Create the required form fields
   this.formData = {
@@ -38,15 +41,16 @@ const Diawi = function(opts) {
   };
 
   // Append the optional parameters to the formData
-  ['password', 'comment', 'callback_url', 'callback_emails',
+  ['password', 'comment', 'callback_emails',
     'wall_of_apps', 'find_by_udid', 'installation_notifications']
       .forEach((key) => {
         if (opts[key]) {
           this.formData[key] = opts[key];
         }
       });
-
-  console.log(this.formData);
+  if (DEBUG) {
+    console.log(this.formData);
+  }
 };
 
 Diawi.prototype.execute = function() {
@@ -63,7 +67,9 @@ Diawi.prototype.onUploadComplete = function(err, response, body) {
   try {
     const json = JSON.parse(body);
     this.job = json.job;
-    console.log('Job found: ', this.job);
+    if (DEBUG) {
+      console.log('Job found: ', this.job);
+    }
 
     this.poll.bind(this)();
   } catch (err) {

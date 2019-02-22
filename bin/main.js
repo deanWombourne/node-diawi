@@ -1,12 +1,16 @@
 #!/usr/bin/env node
 
+const DEBUG = false;
+
 const Diawi = require('../diawi.js');
 
 const argv = require('yargs')
     .scriptName('diawi')
-    .usage('$0 <cmd> args]')
-    .command(['upload <token> <file>', '$0'],
-        'Uploads an ipa, apk or zip to Diawi', (yargs) => {
+    .usage('$0 <cmd> [args]')
+    .command(
+        ['upload <token> <file>', '$0'],
+        'Uploads an ipa, apk or zip to Diawi',
+        (yargs) => {
           yargs
               .positional('token', {
                 describe: 'your API access token',
@@ -19,11 +23,6 @@ const argv = require('yargs')
               .option('password', {
                 alias: 'p',
                 describe: 'protect your app with a password: it will be required to access the installation page',
-                type: 'string',
-              })
-              .option('callbackUrl', {
-                alias: 'u',
-                describe: 'the URL Diawi should call with the result',
                 type: 'string',
               })
               .option('recipients', {
@@ -49,7 +48,7 @@ const argv = require('yargs')
                 default: false,
                 type: 'boolean',
               })
-              .option('dry_run', {
+              .option('dry-run', {
                 describe: 'only parse the arguments without executing the upload',
                 default: false,
                 type: 'boolean',
@@ -59,42 +58,42 @@ const argv = require('yargs')
                 describe: 'additional information to your users on this build: the comment will be displayed on the installation page',
                 type: 'string',
               });
+        },
+        (argv) => {
+          upload(argv);
         })
     .demandCommand()
     .help()
     .argv;
 
-console.log(argv);
+if (DEBUG) {
+  console.log(argv);
+}
 
-const opts = {
-  token: argv.token,
-  path: argv.file,
-  password: argv.password,
-  callback_url: argv.callbackUrl,
-  callback_emails: argv.recipients,
-  wall_of_apps: argv.wall_of_apps === true ? 1 : 0,
-  installation_notifications: argv.installation_notifications === true ? 1 : 0,
-  find_by_udid: argv.find_by_udid === true ? 1 : 0,
-  comment: argv.comment,
-};
-const diawiCommand = new Diawi(opts)
-    .on('complete', function(url) {
-      console.log(url);
-    })
-    .on('error', function(error) {
-      console.log('Failed: ', error);
-      process.exit(1);
-    });
-const command = argv._[0] || 'upload';
-
-switch (command) {
-  case 'upload':
-    if (!argv.dry_run) {
-      diawiCommand.execute();
-    }
-    break;
-
-  default:
-    console.log('Unknown command: ', command);
-    break;
+/**
+ * Execute the upload.
+ * @param {Argv} argv
+ */
+function upload(argv) {
+  const opts = {
+    token: argv.token,
+    path: argv.file,
+    password: argv.password,
+    callback_emails: argv.recipients,
+    wall_of_apps: argv.wall_of_apps === true ? 1 : 0,
+    installation_notifications: argv.installation_notifications === true ? 1 : 0,
+    find_by_udid: argv.find_by_udid === true ? 1 : 0,
+    comment: argv.comment,
+  };
+  const diawiCommand = new Diawi(opts)
+      .on('complete', function(url) {
+        console.log(url);
+      })
+      .on('error', function(error) {
+        console.error('Failed: ', error);
+        process.exit(1);
+      });
+  if (!argv['dry-run']) {
+    diawiCommand.execute();
+  }
 }
