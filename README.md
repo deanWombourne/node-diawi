@@ -1,10 +1,11 @@
 Diawi node module
 ==
 
-Usage:
+Usage
 --
 
 Script:
+
 ```
 var Diawi = require("diawi");
 

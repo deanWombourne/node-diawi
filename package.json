@@ -8,10 +8,12 @@
     "diawi": "./bin/main.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha",
+    "lint": "eslint"
   },
   "keywords": [
     "ipa",
+    "apk",
     "diawi"
   ],
   "author": "Sam Dean",
@@ -19,9 +21,19 @@
   "dependencies": {
     "fs": "0.0.1-security",
     "npm": "~> 6.0",
-    "path": "~> 0.12",
-    "request": "~> 2.85",
-    "yargs": "~> 11.0"
+    "path": "0.12.7",
+    "request": "2.88.0",
+    "yargs": "13.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.14.1",
+    "eslint-config-google": "^0.12.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "mocha": "^6.0.0"
   },
   "repository": {
     "type": "git",
